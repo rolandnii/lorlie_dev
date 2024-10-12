@@ -1,0 +1,47 @@
+<header>
+  <span> &#64;lorlie_dev</span>
+</header>
+<nav>
+  <ul>
+    <li>Lorlie Terminal</li>
+  </ul>
+</nav>
+
+
+<main >
+  <section>
+    <h2>Welcome</h2>
+    <p>type &quot;help&quot; to see the available commands. </p>
+  </section>
+
+  <section>
+    
+@for (terminal of terminalHistory; track $index) {
+
+    <div class="command-container">
+      <div class="command-label">
+        <span class="material-symbols-outlined">
+          folder_open
+        </span>
+        <span>lorlie_dev</span>
+        <span class="material-symbols-outlined"> bolt </span>
+      </div>
+      <div class="command-input">
+        <span class="material-symbols-outlined">
+          visibility
+        </span>
+      
+        @if (!terminal.command) {
+        <input type="text" class=".input" autofocus #inputIndicator (keyup.enter)="runCommmand(inputIndicator.value, $index)">
+      } @else {
+        <input type="text" disabled [value]="terminal.command">
+       }
+      </div>
+       <div class="command-response" [innerHTML]="terminal.response">
+      </div>
+    </div>
+
+}
+    
+  </section>
+</main>

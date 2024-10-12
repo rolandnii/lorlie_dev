@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+:root{
+    --background-1: #282a36;
+    --background-2: #FF79C6;
+    --white: #f8f8f2;
+    --foreground-muted-1: #686868;
+    --foreground-muted-2: #44475A;
+    --success: #50FA7B;
+    --info: #8BE9FD;
+    --danger: #ff5555;
+    --secondary: #BD93F9;
+    --warning: #FFB86C;
+    
+}
+
+
+@font-face {
+    font-family: comfortaa;
+    src: url('assets/font/webfonts/comfortaa-latin-300-normal.woff2') format('woff2'),
+    url('assets/font/webfonts/comfortaa-latin-500-normal.woff') format('woff'),
+    url('assets/font/webfonts/comfortaa-latin-700-normal.woff2') format('woff2'),
+    ;
+    font-weight:  300, 400, 700;
+    font-style: normal;
+  }
+
+* , *::after, *::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    height: 100svh;
+    background-color: var(--background-1);
+    color: var(--white);
+    font-family: 'comfortaa','arial', sans-serif ;
+}
+
