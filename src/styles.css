@@ -1,4 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+
+@font-face {
+    font-family: comfortaa;
+    src: url('assets/font/webfonts/comfortaa-latin-300-normal.woff2') format('woff2'),
+    url('assets/font/webfonts/comfortaa-latin-500-normal.woff') format('woff'),
+    url('assets/font/webfonts/comfortaa-latin-700-normal.woff2') format('woff2'),
+    ;
+    font-weight:  300, 400, 700;
+    font-style: normal;
+  }
 :root{
     --background-1: #282a36;
     --background-2: #FF79C6;
@@ -10,19 +20,7 @@
     --danger: #ff5555;
     --secondary: #BD93F9;
     --warning: #FFB86C;
-    
 }
-
-
-@font-face {
-    font-family: comfortaa;
-    src: url('assets/font/webfonts/comfortaa-latin-300-normal.woff2') format('woff2'),
-    url('assets/font/webfonts/comfortaa-latin-500-normal.woff') format('woff'),
-    url('assets/font/webfonts/comfortaa-latin-700-normal.woff2') format('woff2'),
-    ;
-    font-weight:  300, 400, 700;
-    font-style: normal;
-  }
 
 * , *::after, *::before{
     margin: 0;
@@ -38,4 +36,125 @@ body {
     color: var(--white);
     font-family: 'comfortaa','arial', sans-serif ;
 }
+
+
+    header:first-child {
+        width: 100vw;
+        height: 3rem;
+        background-color: var(--background-2);
+        color: var(--white);
+        display: grid;
+        place-items: center;
+        font-size: 1.2rem;
+        font-family: inherit;
+    
+        /* text-align: center; */
+    }
+
+    nav:first-child {
+        width: 100%;
+        /* display: flex; */
+        display: flex;
+    }
+    
+    
+    nav > ul {
+        --background-2: #44475A;
+        background-color: var(--background-2);
+        list-style: none;
+        border-bottom: 1px dashed #686868 ;
+    }
+    
+    nav > ul > li {
+        padding: 0.9rem;
+        border-right: 1px dashed #686868;
+        /* height: 100%; */
+        width: min(100%, 10rem);
+        margin-right: auto;
+    
+    }
+    
+    
+    main {
+        margin-top: 3.8rem;
+        padding: 0.9rem;
+    }
+    
+    main {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    
+    }
+    
+    main p {
+        color: var(--foreground-muted-1);
+    }
+    
+    section:last-child {
+        width: 100%;
+        display: grid;
+        gap: 1rem;
+    }
+    
+    .command-container div.command-label {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    .command-container div.command-label > span:first-child {
+        color: var(--success);
+    }
+    
+    .command-container div.command-label > span:last-child {
+        color: var(--info);
+    } 
+    
+    .command-container div.command-input {
+        display: flex;
+        align-items: center;
+        color: var(--secondary);
+        gap: 0.25rem;
+      
+    }
+     
+    .command-container div.command-input > span:first-child {
+        color: var(--secondary);
+    }
+    
+    .command-container div.command-input input  {
+        color: var(--secondary);
+        background-color: transparent;
+        outline: none;
+        border: none;
+        width: 100%;
+        cursor: default;
+        font-family: 'comfortaa','arial', sans-serif ;
+    }
+    
+    .command-container div.command-response {
+        color: var(--warning);
+    }
+    
+    
+    .command-container div.command-response {
+        color: var(--warning);
+        padding-top: 0.3rem;
+    }
+    
+    
+    .command-container div.command-response div.help p {
+        display: flex;
+        color: var(--white);
+        width: min(35rem,100%);
+        justify-content: space-between;
+    }
+    
+    .command-container div.command-response div.help p span[class^="material"] {
+        color: var(--warning);
+    } 
+    
+
+
+
 

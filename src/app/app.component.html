@@ -16,10 +16,12 @@
 
   <section>
     
-@for (terminal of terminalHistory; track $index) {
+@for (terminal of terminalHistory; track $index; let l = $last) {
 
+ 
     <div class="command-container">
       <div class="command-label">
+       
         <span class="material-symbols-outlined">
           folder_open
         </span>
@@ -30,15 +32,17 @@
         <span class="material-symbols-outlined">
           visibility
         </span>
-      
-        @if (!terminal.command) {
-        <input type="text" class=".input" autofocus #inputIndicator (keyup.enter)="runCommmand(inputIndicator.value, $index)">
-      } @else {
+        @if (!l) {
         <input type="text" disabled [value]="terminal.command">
+      } @else {
+        <input type="text" class=".input" autofocus #inputIndicator (keyup.enter)="runCommmand(inputIndicator.value, $index)">
        }
       </div>
-       <div class="command-response" [innerHTML]="terminal.response">
-      </div>
+       <div class="command-response" [innerHTML]="terminal.response"> 
+        
+       </div>
+
+
     </div>
 
 }

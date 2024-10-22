@@ -1,9 +1,10 @@
-import { afterNextRender, afterRender, AfterViewInit, Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { afterNextRender, afterRender, AfterViewInit, Component, ElementRef, inject, OnChanges, OnInit, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TerminalInterface } from './terminal-interface';
 import { CommandInterface } from './command-interface';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { PorfoilioService } from './services/porfoilio.service';
 
 
 @Component({
@@ -14,46 +15,52 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.component.css'
 })
 
-export class AppComponent  implements OnInit, OnChanges {
-@ViewChild('inputIndicator') indicator!: ElementRef<HTMLInputElement>
+export class AppComponent  implements AfterViewInit, OnInit {
+@ViewChild('inputIndicator', {static: false}) indicator!: ElementRef<HTMLInputElement>
   terminalHistory : TerminalInterface[]  = [];
   commands!: CommandInterface[];
   showIndicator = true;
+  portfolioService: PorfoilioService =  inject(PorfoilioService)
 
-  constructor(private sanitizer: DomSanitizer) { }
+  constructor(private sanitizer: DomSanitizer, private renderer: Renderer2) { }
+
   ngOnInit(): void {
     this.terminalHistory.push({
       command: undefined
     })
-    this.commands = commands
-    this.indicator.nativeElement.focus()
+    this.commands =  this.portfolioService.commands()
+  }
+  
+  ngAfterViewInit(): void {
+    this.focusInput()
    }
-
-   ngOnChanges(changes: SimpleChanges): void {
-       console.log(changes);
-       
-   }
-
 
   runCommmand(input: string, historyIndex: number) : void {
-   const command =  this.commands.find( command => command.command === input);
-   if (!!command) {
+  if (input == 'clear' || input == 'cls' ) {
+    this.reset()
+    this.focusInput()
+    return;
+  }
+   const command = this.getCommand(input);
+   if (!!command && input != '' ) {
      this.validCommand(input,historyIndex)
-     this.newTerminalLine();
-     return
+    
+   } else {
+    this.invalidCommand(input, historyIndex);
    }
-   this.invalidCommand(input, historyIndex);
    this.newTerminalLine();
+   this.focusInput()
   
   }
   
   toHtml(response?: string) : SafeHtml|undefined {
     return response ? this.sanitizer.bypassSecurityTrustHtml(response) : undefined;
   }
+
   validCommand(input: string, historyIndex: number): void {
     this.terminalHistory[historyIndex] = {
       command: input,
-      response: this.fetchResponse(input)
+      response: this.toHtml(this.fetchResponse(input))
      }
   }
   invalidCommand(input: string, historyIndex: number): void {
@@ -68,28 +75,32 @@ export class AppComponent  implements OnInit, OnChanges {
      })
   }
   
-  fetchResponse(input: string): string {
-    return "this is the response from " + input;
+  fetchResponse(input: string): string | undefined {
+    let desc = this.getCommand(input)?.description
+    return desc;
   }
 
+  getCommand(input: string): CommandInterface | undefined {
 
+    return  this.commands.find( command => command.command === input)
 
-  debug(val: any) : any {
-    console.log(val);
-    
-    return val;
+  }
+
+  focusInput() {
+   
+    if ( this.indicator) {
+      setTimeout(() => {
+        this.indicator.nativeElement.focus();
+      });
+    }
+  }
+
+  reset() {
+    this.terminalHistory = []
+    this.newTerminalLine()
   }
 
 }
 
 
-export const commands: CommandInterface[] = [
-  {
-    command: 'about',
-    description: 'To give you a brief history about me'
-  },{
-    command: 'contact',
-    description: "<h2>reach out to me on</h2>"
-  }
-]
 
